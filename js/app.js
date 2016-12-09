@@ -347,7 +347,7 @@ var brewery = function(data) {
 								'</div class="iw-address-head">' +
 									'<b>Address:</b>' +
 								'</div>' +
-								'</div class="address-content">' +
+								'<div class="iw-address-content">' +
 									self.address +
 								'</div>' +
 								'<div class="iw-snippet-head">' +
