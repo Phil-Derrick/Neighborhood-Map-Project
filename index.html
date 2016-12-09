@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+
+		<title>Atlanta Brewery Search</title>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+
+		<div id="wrapper">
+
+			<div id="sidebar-wrapper">
+				<div class="sidebar-nav">
+					<div class="sidebar-heading">
+						<b>Global Brewery Search</b>
+					</div>
+					<div id="yelp-logo-container">
+						Powered by <img src="img/Yelp_trademark_RGB.png">
+					</div>
+					<form class="form-group input-group" id="city-search" data-bind="submit: updateBreweryList">
+						<p>Enter a city, to find local breweries:</p>
+						<input type="search" class="form-control" placeholder="Enter City" data-bind="value: city">
+					</form>
+					<form class="form-group input-group" id="brewery-filter" role="search">
+						<p>Filter brewery results by name here:</p>
+						<input type="search" class="form-control" placeholder="Brewery name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+					</form>
+					<div class="sidebar-brewery-list" data-bind="foreach: breweries, click: toggleMenu" id="brewery-list">
+						<a href="#" class="list-group-item" data-bind="text: name, click: $parent.activateMarker"></a>
+					</div>
+				</div>
+			</div>
+
+			<div id="page-content-wrapper">
+				<div class="container-fluid">
+					<div class="row" id="page-content-container">
+						<div class="col-lg-12" id="toggle-container">
+							<a href="#menu-toggle" class="btn btn-default btn-sm" id="menu-toggle" data-bind="click: toggleMenu">
+								<span class="glyphicon glyphicon-menu-hamburger"></span> Toggle Menu
+							</a>
+						</div>
+						<div class="col-lg-12" id="map-container">
+							<div id="map">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHWhb3WxXM7deBtkzmvL2f4DewFcCnhwM&callback=cb" onerror="googleError()"></script>
+		<script src="js/libs/jquery.min.js"></script>
+		<script src="js/libs/jquery.jsonp-2.4.0.min.js"></script>
+		<script src="js/libs/oauth-signature.min.js"></script>
+		<script src="js/libs/knockout-3.4.0.js"></script>
+		<script src="js/app.js"></script>
+
+	</body>
+</html>

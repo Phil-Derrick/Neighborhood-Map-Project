@@ -1,0 +1,160 @@
+body {
+	overflow-x: hidden;
+}
+
+#map {
+	background-color: black;
+	height: 100vh;
+	padding-top: 5px;
+}
+
+/* Toggle Styles */
+
+#wrapper {
+	padding-left: 0;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+	padding-left: 250px;
+}
+
+#sidebar-wrapper {
+	z-index: 1000;
+	position: fixed;
+	left: 250px;
+	width: 0;
+	height: 100%;
+	margin-left: -250px;
+	overflow-y: auto;
+	background: #000;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	width: 250px;
+}
+
+#page-content-wrapper {
+	color: white;
+	background-color: black;
+	width: 100%;
+	position: absolute;
+	padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+	position: absolute;
+	margin-right: -250px;
+}
+
+#yelp-logo-container {
+	color: white;
+	font-style: italic;
+}
+
+#yelp-logo-container img {
+	float: center;
+	margin: 0 0 7px 0;
+	height: 40px
+}
+
+/* Sidebar Styles */
+
+#city-search {
+	color: white;
+	font-size: 14px;
+}
+
+#brewery-filter {
+	color: white;
+	font-size: 14px;
+}
+
+.list-group-item {
+	padding: 0px;
+	line-height: 30px;
+	word-wrap: break-word;
+}
+
+.sidebar-nav {
+	position: absolute;
+	width: 250px;
+	list-style: none;
+}
+
+.sidebar-brewery-list {
+	display: block;
+	text-decoration: none;
+	color: #999999;
+}
+
+.sidebar-brewery-list a:hover {
+	text-decoration: none;
+	color: #fff;
+	background: rgba(255,255,255,0.2);
+}
+
+.sidebar-brewery-list a:active,
+.sidebar-brewery-list a:focus {
+	text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-heading {
+	color: white;
+	/*height: 65px;*/
+	font-size: 22px;
+	line-height: 30px;
+}
+
+@media(min-width:768px) {
+	#wrapper {
+		padding-left: 250px;
+	}
+
+	#wrapper.toggled {
+		padding-left: 0;
+	}
+
+	#sidebar-wrapper {
+		width: 250px;
+	}
+
+	#wrapper.toggled #sidebar-wrapper {
+		width: 0;
+	}
+
+	#page-content-wrapper {
+		padding: 20px;
+		position: relative;
+	}
+
+	#wrapper.toggled #page-content-wrapper {
+		position: relative;
+		margin-right: 0;
+	}
+}
+
+/* InfoWindow Styles */
+
+#iw-container  .iw-title {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 22px;
+	font-weight: 400;
+	padding: 10px;
+	background-color: black;
+	color: white;
+	margin: 1px;
+	border-radius: 2px 2px 0 0;
+}
+
+.iw-brewery-img {
+	float: right;
+	margin: 5px 5px 0 0;
+}
