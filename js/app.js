@@ -318,7 +318,7 @@ function yelpSettings(city) {
 // ******************* MODEL *******************
 
 // Function to create each brewery object.
-var brewery = function(data) {
+var Brewery = function(data) {
 	var self = this;
 	self.name === 'undefined' ? self.name = 'No name available' : self.name = data.name;
 	self.address === 'undefined' ? self.address = 'No address available' : self.address = data.location.address[0];
@@ -417,7 +417,7 @@ var viewModel = {
 	// of the map around the markers.
 	createBreweryList: function() {
 		breweries.forEach(function(obj) {
-				viewModel.breweries.push(new brewery(obj));
+				viewModel.breweries.push(new Brewery(obj));
 			});
 
 		fitMap(viewModel.breweries());
