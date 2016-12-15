@@ -5,15 +5,6 @@ var map,
 	infowindow,
 	breweries = [];
 
-// Code for the StringStartsWith function no longer available in KO library.
-// located from this post:
-// https://discussions.udacity.com/t/knockout-js-filter-utility-error-uncaught-typeerror-location-name-is-not-a-function/15504/4
-ko.utils.stringStartsWith = function(string, startsWith) {
-	string = string || "";
-	if (startsWith.length > string.length) return false;
-	return string.substring(0, startsWith.length) === startsWith;
-};
-
 // Callback function for google maps API call. Initializes the app if API call
 // is successful.
 function cb() {
@@ -440,11 +431,10 @@ var viewModel = {
 	search: function(value) {
 		viewModel.breweries().forEach(function(obj) {
 
-			obj.marker.setVisible(false);
-
 			if (obj.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 				obj.marker.setVisible(true);
-
+			} else {
+				obj.marker.setVisible(false);
 			};
 		});
 	},
@@ -478,7 +468,7 @@ viewModel.filteredBreweryList = ko.computed(function() {
 		return viewModel.breweries();
 	} else {
 		return ko.utils.arrayFilter(viewModel.breweries(), function (obj) {
-			return ko.utils.stringStartsWith(obj.name.toLowerCase(), filter);
+			return obj.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
 		});
 	};
 });
