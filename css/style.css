@@ -90,6 +90,7 @@ body {
 }
 
 .sidebar-brewery-list {
+	padding: 0px;
 	display: block;
 	text-decoration: none;
 	color: #999999;
@@ -109,7 +110,7 @@ body {
 .sidebar-nav > .sidebar-heading {
 	color: white;
 	/*height: 65px;*/
-	font-size: 22px;
+	font-size: 21px;
 	line-height: 30px;
 }
 
@@ -149,7 +150,7 @@ body {
 
 #iw-container  .iw-title {
 	color: white;
-	font-family: 'Open Sans Condensed', sans-serif;
+	font-family: "Open Sans Condensed", sans-serif;
 	font-size: 22px;
 	font-weight: 400;
 	padding: 10px;

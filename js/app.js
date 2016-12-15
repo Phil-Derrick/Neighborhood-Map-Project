@@ -5,6 +5,15 @@ var map,
 	infowindow,
 	breweries = [];
 
+// Code for the StringStartsWith function no longer available in KO library.
+// located from this post:
+// https://discussions.udacity.com/t/knockout-js-filter-utility-error-uncaught-typeerror-location-name-is-not-a-function/15504/4
+ko.utils.stringStartsWith = function(string, startsWith) {
+	string = string || "";
+	if (startsWith.length > string.length) return false;
+	return string.substring(0, startsWith.length) === startsWith;
+};
+
 // Callback function for google maps API call. Initializes the app if API call
 // is successful.
 function cb() {
@@ -311,13 +320,13 @@ function yelpSettings(city) {
 // Function to create each brewery object.
 var brewery = function(data) {
 	var self = this;
-	self.name = data.name;
-	self.address = data.location.address[0];
+	self.name === 'undefined' ? self.name = 'No name available' : self.name = data.name;
+	self.address === 'undefined' ? self.address = 'No address available' : self.address = data.location.address[0];
 	self.image_url = data.image_url;
 	self.lat = data.location.coordinate.latitude;
 	self.lng = data.location.coordinate.longitude;
-	self.snippet = data.snippet_text;
-	self.rating = data.rating;
+	self.snippet === 'undefined' ? self.snippet = 'No snippet text available' : self.snippet = data.snippet_text;
+	self.rating === 'undefined' ? self.rating = 'No rating available' : self.rating = data.rating;
 	self.rating_img_url = data.rating_img_url;
 	self.marker = new google.maps.Marker({
 		map: map,
@@ -325,7 +334,7 @@ var brewery = function(data) {
 			lat: self.lat,
 			lng: self.lng
 		},
-		title: data.name
+		title: self.name
 	});
 
 	// Function to build the infowindow content and activate it when the user
@@ -367,7 +376,7 @@ var brewery = function(data) {
 
 		setTimeout(function() {
 			self.marker.setAnimation(null);
-		}, 2500);
+		}, 1400);
 	});
 };
 
@@ -397,11 +406,11 @@ function getBreweries (city) {
 
 var viewModel = {
 
-	city: ko.observable("Atlanta"),
+	city: ko.observable('Atlanta'),
 
 	breweries: ko.observableArray([]),
 
-	query: ko.observable(""),
+	query: ko.observable(''),
 
 	// Creates a new brewery object for each of our default Atlanta breweries
 	// and pushes into the viewModel breweries array. Also, fits the bounds
@@ -422,22 +431,20 @@ var viewModel = {
 		breweries = [];
 
 		getBreweries(viewModel.city());
-		fitMap(viewModel.breweries());
 
-		breweries.forEach(function(obj) {
-			viewModel.breweries.push(new brewery(obj));
-		});
+		viewModel.createBreweryList();
 	},
 
 	// Filter function to display only the brewery objects that match user
 	// input.
 	search: function(value) {
-		viewModel.removeMarkers();
-		viewModel.breweries.removeAll();
+		viewModel.breweries().forEach(function(obj) {
 
-		breweries.forEach(function(obj) {
+			obj.marker.setVisible(false);
+
 			if (obj.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-				viewModel.breweries.push(new brewery(obj));
+				obj.marker.setVisible(true);
+
 			};
 		});
 	},
@@ -460,3 +467,18 @@ var viewModel = {
 		$("#wrapper").toggleClass("toggled");
 	},
 };
+
+// Computed function to handle filtering the list of breweries. Had to declare
+// outside the viewModel object literal for it to work - see stack overflow post:
+// http://stackoverflow.com/questions/9589419/difference-between-knockout-view-models-declared-as-object-literals-vs-functions
+viewModel.filteredBreweryList = ko.computed(function() {
+	var filter = viewModel.query();
+
+	if (!filter) {
+		return viewModel.breweries();
+	} else {
+		return ko.utils.arrayFilter(viewModel.breweries(), function (obj) {
+			return ko.utils.stringStartsWith(obj.name.toLowerCase(), filter);
+		});
+	};
+});
